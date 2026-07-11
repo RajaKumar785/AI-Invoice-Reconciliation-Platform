@@ -9,13 +9,23 @@ from utils.text_cleaner import clean_ocr_text
 # Configuration
 # -------------------------------------------------------
 
-TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+import platform
 
-POPPLER_PATH = r"D:\Download\Release-26.02.0-0\poppler-26.02.0\Library\bin"
+# -------------------------------------------------------
+# Configuration
+# -------------------------------------------------------
 
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+if platform.system() == "Windows":
 
+    TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
+    POPPLER_PATH = r"D:\Download\Release-26.02.0-0\poppler-26.02.0\Library\bin"
+
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+
+else:
+
+    POPPLER_PATH = None
 # -------------------------------------------------------
 # Image Preprocessing
 # -------------------------------------------------------
@@ -134,10 +144,19 @@ def extract_text(file_path):
 
     if extension == ".pdf":
 
-        pages = convert_from_path(
-            file_path,
-            poppler_path=POPPLER_PATH,
-            dpi=400
+        if POPPLER_PATH:
+
+           pages = convert_from_path(
+              file_path,
+              poppler_path=POPPLER_PATH,
+              dpi=400
+            )
+
+        else:
+
+          pages = convert_from_path(
+             file_path,
+             dpi=400
         )
 
         complete_text = ""
