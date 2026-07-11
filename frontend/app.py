@@ -27,7 +27,6 @@ from components.pdf_preview import show_pdf_preview
 # ----------------------------------------------------
 # Backend Modules
 # ----------------------------------------------------
-
 from ocr import extract_text
 from extractor import extract_document_data
 from matcher import match_documents
@@ -39,7 +38,8 @@ from database.models import (
     create_tables,
     save_invoice,
     invoice_exists,
-    get_invoice_history
+    get_invoice_history,
+    clear_database
 )
 
 # ----------------------------------------------------
@@ -69,6 +69,18 @@ load_theme()
 # ----------------------------------------------------
 
 show_header()
+
+# ----------------------------------------------------
+# Clear Database Button
+# ----------------------------------------------------
+
+if st.button("🗑️ Clear All History"):
+
+    clear_database()
+
+    st.success("Database cleared successfully!")
+
+    st.rerun()
 
 # ----------------------------------------------------
 # Dashboard Metrics
