@@ -18,4 +18,4 @@ COPY . .
 
 EXPOSE 10000
 
-CMD ["streamlit", "run", "frontend/app.py", "--server.address=0.0.0.0", "--server.port=10000"]
+CMD ["sh", "-c", "streamlit run frontend/app.py --server.address=0.0.0.0 --server.port=${PORT:-10000}"]
